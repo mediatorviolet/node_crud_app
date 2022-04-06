@@ -1,0 +1,28 @@
+<!-- index.ejs -->
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>crude</title>
+</head>
+<body>
+<h1>MDR</h1>
+<form action="/people" method="POST">
+    <input type="text" placeholder="name" name="name">
+    <input type="text" placeholder="pseudo" name="pseudo">
+    <button type="submit">Submit</button>
+</form>
+<h2>People</h2>
+<ul>
+    <% for (let i = 0; i < people.length; i++) { %>
+        <li class="people">
+            <span><%= people[i].name %> - <%= people[i].pseudo %></span>
+            <button name="update" id="<%= people[i]._id %>">Update</button>
+        </li>
+    <% } %>
+</ul>
+<script src="/main.js"></script>
+</body>
+</html>
