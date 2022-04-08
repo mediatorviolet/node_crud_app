@@ -8,10 +8,10 @@
     <title>crude</title>
 </head>
 <body>
-<h1>MDR</h1>
-<form action="/people" method="POST">
-    <input type="text" placeholder="name" name="name">
-    <input type="text" placeholder="pseudo" name="pseudo">
+<h1>jdlexqjdq,</h1>
+<form id="form-create">
+    <input type="text" placeholder="name" name="create-name">
+    <input type="text" placeholder="pseudo" name="create-pseudo">
     <button type="submit">Submit</button>
 </form>
 <h2>People</h2>
@@ -19,7 +19,10 @@
     <% for (let i = 0; i < people.length; i++) { %>
         <li class="people">
             <span><%= people[i].name %> - <%= people[i].pseudo %></span>
-            <button name="update" id="<%= people[i]._id %>">Update</button>
+            <a href="http://localhost:5000/people/<%= people[i]._id %>">
+                <button name="update" id="<%= people[i]._id %>">Update</button>
+            </a>
+            <button name="delete" id="<%= people[i]._id %>">Delete</button>
         </li>
     <% } %>
 </ul>

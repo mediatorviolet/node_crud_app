@@ -1,8 +1,8 @@
 "use strict"
+
 require("dotenv").config()
 const express = require("express")
 const bodyParser = require("body-parser")
-const path = require("path")
 const mongoose = require("mongoose")
 const app = express()
 const port = process.env.PORT || 5000
@@ -31,11 +31,23 @@ db.once("open", () => {
 
 const peopleCollection = db.collection('people')
 
-app.get('/', (req, res) => {
-    const cursor = peopleCollection.find().toArray()
-        .then(result => res.render('index.ejs', { people: result }))
-        .catch(err => console.log(err))
+app.get('/', async (req, res) => {
+    let data = await PeopleModel.find();
+    res.render('index.ejs', { people: data })
 })
+
+app.get('/people/:id', async (req, res) => {
+    let data = await PeopleModel.findById(req.params.id)
+    res.render('people.ejs', { people: data })
+})
+
+app.put('/people/:id', async (req, res) => {
+    console.log('body', req.body)
+    let data = await PeopleModel.findByIdAndUpdate(req.params.id, { name: req.body.name, pseudo: req.body.pseudo })
+
+    return res.json(data)
+})
+
 app.post('/people', (req, res) => {
     console.log(req.body)
     peopleCollection.insertOne(req.body)
@@ -43,4 +55,10 @@ app.post('/people', (req, res) => {
             console.log(result)
         })
         .catch(err => console.log(err))
+})
+
+app.delete('/people/:id', async (req, res) => {
+    let data = await PeopleModel.findByIdAndDelete(req.params.id)
+
+    return res.status(200).json(data)
 })
